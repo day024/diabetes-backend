@@ -1,17 +1,9 @@
 package com.onetool.server.diabetes.service;
 
-import com.onetool.server.blueprint.Blueprint;
-import com.onetool.server.blueprint.dto.BlueprintRequest;
-import com.onetool.server.blueprint.dto.BlueprintResponse;
-import com.onetool.server.blueprint.dto.SearchResponse;
-import com.onetool.server.category.FirstCategoryType;
 import com.onetool.server.diabetes.Diabetes;
 import com.onetool.server.diabetes.dto.DiabetesRequest;
 import com.onetool.server.diabetes.dto.DiabetesResponse;
 import com.onetool.server.diabetes.repository.DiabetesRepository;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageImpl;
-import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;

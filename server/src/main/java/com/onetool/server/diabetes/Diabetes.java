@@ -1,8 +1,6 @@
 package com.onetool.server.diabetes;
 
-import com.onetool.server.cart.CartBlueprint;
 import com.onetool.server.global.entity.BaseEntity;
-import com.onetool.server.order.OrderBlueprint;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
 import lombok.Builder;
@@ -11,8 +9,6 @@ import lombok.NoArgsConstructor;
 
 import java.math.BigInteger;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.List;
 
 @Entity
 @Getter
