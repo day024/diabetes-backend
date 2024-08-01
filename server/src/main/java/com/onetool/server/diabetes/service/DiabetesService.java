@@ -1,10 +1,15 @@
 package com.onetool.server.diabetes.service;
 
+import com.onetool.server.category.FirstCategoryType;
 import com.onetool.server.diabetes.Diabetes;
 import com.onetool.server.diabetes.dto.DiabetesRequest;
 import com.onetool.server.diabetes.dto.DiabetesResponse;
+import com.onetool.server.diabetes.dto.DiabetesSearchResponse;
 import com.onetool.server.diabetes.repository.DiabetesRepository;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
 import org.springframework.stereotype.Service;
+import org.springframework.data.domain.Pageable;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -39,8 +44,8 @@ public class DiabetesService {
                     .id(diabetesRequest.id())
                     .diabetesName(diabetesRequest.diabetesName())
                     .categoryId(diabetesRequest.categoryId())
-                    .secondCategory(diabetesRequest.secondCategory())
                     .standardPrice(diabetesRequest.standardPrice())
+                    .diabetesDetails(diabetesRequest.diabetesDetails())
                     .diabetesImg(diabetesRequest.diabetesImg())
                     .diabetesDetailsImg(diabetesRequest.diabetesDetailsImg())
                     .capacity(diabetesRequest.capacity())
@@ -70,8 +75,8 @@ public class DiabetesService {
                 .id(existingDiabetes.getId())
                 .diabetesName(diabetesResponse.diabetesName())
                 .categoryId(diabetesResponse.categoryId())
-                .secondCategory(diabetesResponse.secondCategory())
                 .standardPrice(diabetesResponse.standardPrice())
+                .diabetesDetails(diabetesResponse.diabetesDetails())
                 .diabetesImg(diabetesResponse.diabetesImg())
                 .diabetesDetailsImg(diabetesResponse.diabetesDetailsImg())
                 .capacity(diabetesResponse.capacity())
@@ -89,6 +94,30 @@ public class DiabetesService {
     public boolean deleteDiabetes(Long id) {
         diabetesRepository.deleteById(id);
         return true;
+    }
+
+    public Page<DiabetesSearchResponse> searchByNameWithKeyword(String keyword, Pageable pageable) {
+        Page<Diabetes> result = diabetesRepository.searchByNameWithKeyword(keyword, pageable);
+        List<DiabetesSearchResponse> list = result.getContent().stream()
+                .map(DiabetesSearchResponse::from)
+                .collect(Collectors.toList());
+        return new PageImpl<>(list, pageable, result.getTotalElements());
+    }
+
+    public Page<DiabetesSearchResponse> findAllByFirstCategory(FirstCategoryType firstCategory, Pageable pageable) {
+        Page<Diabetes> result = diabetesRepository.findAllByFirstCategory(firstCategory.getType(), pageable);
+        List<DiabetesSearchResponse> list = result.getContent().stream()
+                .map(DiabetesSearchResponse::from)
+                .collect(Collectors.toList());
+        return new PageImpl<>(list, pageable, result.getTotalElements());
+    }
+
+    public Page<DiabetesSearchResponse> findAll(Pageable pageable) {
+        Page<Diabetes> result = diabetesRepository.findAll(pageable);
+        List<DiabetesSearchResponse> list = result.getContent().stream()
+                .map(DiabetesSearchResponse::from)
+                .collect(Collectors.toList());
+        return new PageImpl<>(list, pageable, result.getTotalElements());
     }
 
 }

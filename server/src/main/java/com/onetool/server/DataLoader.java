@@ -1,12 +1,12 @@
 package com.onetool.server;
 
-import com.onetool.server.blueprint.Blueprint;
-import com.onetool.server.blueprint.repository.BlueprintRepository;
 import com.onetool.server.category.FirstCategory;
 import com.onetool.server.category.FirstCategoryRepository;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Component;
+
+import java.util.Optional;
 
 @Profile("default")
 @Component
@@ -20,46 +20,27 @@ public class DataLoader implements CommandLineRunner {
 
     @Override
     public void run(String... args) throws Exception {
-        final FirstCategory firstCategory1 = firstCategoryRepository.save(
-                FirstCategory.builder()
-                        .id(1L)
-                        .name("building")
-                        .build()
-        );
+        createCategoryIfNotExists(1L, "building");
+        createCategoryIfNotExists(2L, "civil");
+        createCategoryIfNotExists(3L, "interior");
+        createCategoryIfNotExists(4L, "machine");
+        createCategoryIfNotExists(5L, "electric");
+        createCategoryIfNotExists(6L, "etc");
+        createCategoryIfNotExists(7L, "category1");
+        createCategoryIfNotExists(8L, "category2");
+        createCategoryIfNotExists(9L, "category3");
+        createCategoryIfNotExists(10L, "category4");
+        createCategoryIfNotExists(11L, "category5");
+    }
 
-        final FirstCategory firstCategory2 = firstCategoryRepository.save(
-                FirstCategory.builder()
-                        .id(2L)
-                        .name("civil")
-                        .build()
-        );
-
-        final FirstCategory firstCategory3 = firstCategoryRepository.save(
-                FirstCategory.builder()
-                        .id(3L)
-                        .name("interior")
-                        .build()
-        );
-
-        final FirstCategory firstCategory4 = firstCategoryRepository.save(
-                FirstCategory.builder()
-                        .id(4L)
-                        .name("machine")
-                        .build()
-        );
-
-        final FirstCategory firstCategory5 = firstCategoryRepository.save(
-                FirstCategory.builder()
-                        .id(5L)
-                        .name("electric")
-                        .build()
-        );
-
-        final FirstCategory firstCategory6 = firstCategoryRepository.save(
-                FirstCategory.builder()
-                        .id(6L)
-                        .name("etc")
-                        .build()
-        );
+    private void createCategoryIfNotExists(Long id, String name) {
+        Optional<FirstCategory> existingCategory = firstCategoryRepository.findById(id);
+        if (!existingCategory.isPresent()) {
+            FirstCategory category = FirstCategory.builder()
+                    .id(id)
+                    .name(name)
+                    .build();
+            firstCategoryRepository.save(category);
+        }
     }
 }
