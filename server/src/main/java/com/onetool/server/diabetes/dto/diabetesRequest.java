@@ -1,43 +1,41 @@
 package com.onetool.server.diabetes.dto;
 
-import com.onetool.server.blueprint.Blueprint;
-import com.onetool.server.blueprint.dto.BlueprintRequest;
+import com.onetool.server.diabetes.Diabetes;
 import lombok.Builder;
-
 import java.math.BigInteger;
 import java.time.LocalDateTime;
 
-public record diabetesRequest(
+public record DiabetesRequest(
         Long id,
-        String blueprintName,
+        String diabetesName,
         Long categoryId,
+        String secondCategory,
         Long standardPrice,
-        String blueprintImg,
-        String blueprintDetails,
-        String extension,
-        String program,
+        String diabetesImg,
+        String diabetesDetailsImg,
+        String capacity,
+        String calorie,
+        String storage,
         BigInteger hits,
         Long salePrice,
-        LocalDateTime saleExpiredDate,
-        String creatorName,
-        String downloadLink
-)  {
+        LocalDateTime saleExpiredDate
+) {
     @Builder
-    public static diabetesRequest fromEntity(Blueprint blueprint) {
-        return new diabetesRequest(
-                blueprint.getId(),
-                blueprint.getBlueprintName(),
-                blueprint.getCategoryId(),
-                blueprint.getStandardPrice(),
-                blueprint.getBlueprintImg(),
-                blueprint.getBlueprintDetails(),
-                blueprint.getExtension(),
-                blueprint.getProgram(),
-                blueprint.getHits(),
-                blueprint.getSalePrice(),
-                blueprint.getSaleExpiredDate(),
-                blueprint.getCreatorName(),
-                blueprint.getDownloadLink()
+    public static DiabetesRequest fromEntity(Diabetes diabetes) {
+        return new DiabetesRequest(
+                diabetes.getId(),
+                diabetes.getDiabetesName(),
+                diabetes.getCategoryId(),
+                diabetes.getSecondCategory(),
+                diabetes.getStandardPrice(),
+                diabetes.getDiabetesImg(),
+                diabetes.getDiabetesDetailsImg(),
+                diabetes.getCapacity(),
+                diabetes.getCalorie(),
+                diabetes.getStorage(),
+                diabetes.getHits(),
+                diabetes.getSalePrice(),
+                diabetes.getSaleExpiredDate()
         );
     }
 }

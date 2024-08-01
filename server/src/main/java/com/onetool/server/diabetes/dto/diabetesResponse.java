@@ -1,53 +1,53 @@
 package com.onetool.server.diabetes.dto;
 
-import com.onetool.server.blueprint.Blueprint;
+import com.onetool.server.diabetes.Diabetes;
 import lombok.Builder;
 
 import java.math.BigInteger;
 import java.time.LocalDateTime;
 
 @Builder
-public record diabetesResponse(
+public record DiabetesResponse(
         Long id,
-        String blueprintName,
+        String diabetesName,
         Long categoryId,
+        String secondCategory,
         Long standardPrice,
-        String blueprintImg,
-        String blueprintDetails,
-        String extension,
-        String program,
+        String diabetesImg,
+        String diabetesDetailsImg,
+        String capacity,
+        String calorie,
+        String storage,
         BigInteger hits,
         Long salePrice,
-        LocalDateTime saleExpiredDate,
-        String creatorName,
-        String downloadLink
-)  {
+        LocalDateTime saleExpiredDate
+) {
     @Builder
-    public static diabetesResponse fromEntity(Blueprint blueprint) {
-        return new diabetesResponse(
-                blueprint.getId(),
-                blueprint.getBlueprintName(),
-                blueprint.getCategoryId(),
-                blueprint.getStandardPrice(),
-                blueprint.getBlueprintImg(),
-                blueprint.getBlueprintDetails(),
-                blueprint.getExtension(),
-                blueprint.getProgram(),
-                blueprint.getHits(),
-                blueprint.getSalePrice(),
-                blueprint.getSaleExpiredDate(),
-                blueprint.getCreatorName(),
-                blueprint.getDownloadLink()
+    public static DiabetesResponse fromEntity(Diabetes diabetes) {
+        return new DiabetesResponse(
+                diabetes.getId(),
+                diabetes.getDiabetesName(),
+                diabetes.getCategoryId(),
+                diabetes.getSecondCategory(),
+                diabetes.getStandardPrice(),
+                diabetes.getDiabetesImg(),
+                diabetes.getDiabetesDetailsImg(),
+                diabetes.getCapacity(),
+                diabetes.getCalorie(),
+                diabetes.getStorage(),
+                diabetes.getHits(),
+                diabetes.getSalePrice(),
+                diabetes.getSaleExpiredDate()
         );
     }
-    public static diabetesResponse items(Blueprint blueprint){
-        return diabetesResponse.builder()
-                .id(blueprint.getId())
-                .creatorName(blueprint.getCreatorName())
-                .blueprintName(blueprint.getBlueprintName())
-                .standardPrice(blueprint.getStandardPrice())
-                .salePrice(blueprint.getSalePrice())
-                .blueprintImg(blueprint.getBlueprintImg())
+
+    public static DiabetesResponse items(Diabetes diabetes) {
+        return DiabetesResponse.builder()
+                .id(diabetes.getId())
+                .diabetesName(diabetes.getDiabetesName())
+                .standardPrice(diabetes.getStandardPrice())
+                .salePrice(diabetes.getSalePrice())
+                .diabetesImg(diabetes.getDiabetesImg())
                 .build();
     }
 }

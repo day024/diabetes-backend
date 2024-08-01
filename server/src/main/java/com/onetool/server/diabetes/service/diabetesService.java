@@ -5,7 +5,10 @@ import com.onetool.server.blueprint.dto.BlueprintRequest;
 import com.onetool.server.blueprint.dto.BlueprintResponse;
 import com.onetool.server.blueprint.dto.SearchResponse;
 import com.onetool.server.category.FirstCategoryType;
-import com.onetool.server.diabetes.repository.diabetesRepository;
+import com.onetool.server.diabetes.Diabetes;
+import com.onetool.server.diabetes.dto.DiabetesRequest;
+import com.onetool.server.diabetes.dto.DiabetesResponse;
+import com.onetool.server.diabetes.repository.DiabetesRepository;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
@@ -15,119 +18,85 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
-public class diabetesService {
+public class DiabetesService {
 
-    private diabetesRepository blueprintRepository;
+    private final DiabetesRepository diabetesRepository;
 
-    public diabetesService(diabetesRepository blueprintRepository) {
-        this.blueprintRepository = blueprintRepository;
+    public DiabetesService(DiabetesRepository diabetesRepository) {
+        this.diabetesRepository = diabetesRepository;
     }
 
-    public List<BlueprintResponse> findAllBlueprints(){
-        List<Blueprint> blueprints = blueprintRepository.findAll();
+    public List<DiabetesResponse> findAllDiabetes() {
+        List<Diabetes> diabetesList = diabetesRepository.findAll();
 
-        return blueprints.stream()
-                .map(BlueprintResponse::fromEntity)
+        return diabetesList.stream()
+                .map(DiabetesResponse::fromEntity)
                 .collect(Collectors.toList());
     }
 
-    public BlueprintResponse findBlueprintById(Long id) {
-        Blueprint blueprint = blueprintRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Blueprint not found with id: " + id));
+    public DiabetesResponse findDiabetesById(Long id) {
+        Diabetes diabetes = diabetesRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Diabetes not found with id: " + id));
 
-        return BlueprintResponse.fromEntity(blueprint);
+        return DiabetesResponse.fromEntity(diabetes);
     }
 
-    public boolean createBlueprint(BlueprintRequest blueprintRequest) {
+    public boolean createDiabetes(DiabetesRequest diabetesRequest) {
         try {
-            Blueprint blueprint = Blueprint.builder() //TODO 불필요한 부분 수정하기
-                    .id(blueprintRequest.id())
-                    .blueprintName(blueprintRequest.blueprintName())
-                    .categoryId(blueprintRequest.categoryId())
-                    .standardPrice(blueprintRequest.standardPrice())
-                    .blueprintImg(blueprintRequest.blueprintImg())
-                    .blueprintDetails(blueprintRequest.blueprintDetails())
-                    .extension(blueprintRequest.extension())
-                    .program(blueprintRequest.program())
-                    .hits(blueprintRequest.hits())
-                    .salePrice(blueprintRequest.salePrice())
-                    .saleExpiredDate(blueprintRequest.saleExpiredDate())
-                    .creatorName(blueprintRequest.creatorName())
-                    .downloadLink(blueprintRequest.downloadLink())
+            Diabetes diabetes = Diabetes.builder()
+                    .id(diabetesRequest.id())
+                    .diabetesName(diabetesRequest.diabetesName())
+                    .categoryId(diabetesRequest.categoryId())
+                    .secondCategory(diabetesRequest.secondCategory())
+                    .standardPrice(diabetesRequest.standardPrice())
+                    .diabetesImg(diabetesRequest.diabetesImg())
+                    .diabetesDetailsImg(diabetesRequest.diabetesDetailsImg())
+                    .capacity(diabetesRequest.capacity())
+                    .calorie(diabetesRequest.calorie())
+                    .storage(diabetesRequest.storage())
+                    .hits(diabetesRequest.hits())
+                    .salePrice(diabetesRequest.salePrice())
+                    .saleExpiredDate(diabetesRequest.saleExpiredDate())
                     .build();
 
-            saveBlueprint(blueprint);
+            saveDiabetes(diabetes);
             return true;
         } catch (Exception e) {
             return false;
         }
     }
 
-    public Blueprint saveBlueprint(Blueprint blueprint) {
-        return blueprintRepository.save(blueprint);
+    public Diabetes saveDiabetes(Diabetes diabetes) {
+        return diabetesRepository.save(diabetes);
     }
 
-    public boolean updateBlueprint(BlueprintResponse blueprintResponse) {
-        Blueprint existingBlueprint = blueprintRepository.findById(blueprintResponse.id())
-                .orElseThrow(() -> new RuntimeException("Blueprint not found with id: " + blueprintResponse.id()));
+    public boolean updateDiabetes(DiabetesResponse diabetesResponse) {
+        Diabetes existingDiabetes = diabetesRepository.findById(diabetesResponse.id())
+                .orElseThrow(() -> new RuntimeException("Diabetes not found with id: " + diabetesResponse.id()));
 
-        Blueprint updatedBlueprint = Blueprint.builder()
-                .id(existingBlueprint.getId())
-                .blueprintName(blueprintResponse.blueprintName())
-                .categoryId(blueprintResponse.categoryId())
-                .standardPrice(blueprintResponse.standardPrice())
-                .blueprintImg(blueprintResponse.blueprintImg())
-                .blueprintDetails(blueprintResponse.blueprintDetails())
-                .extension(blueprintResponse.extension())
-                .program(blueprintResponse.program())
-                .hits(blueprintResponse.hits())
-                .salePrice(blueprintResponse.salePrice())
-                .saleExpiredDate(blueprintResponse.saleExpiredDate())
-                .creatorName(blueprintResponse.creatorName())
-                .downloadLink(blueprintResponse.downloadLink())
-                .orderBlueprint(existingBlueprint.getOrderBlueprint())
-                .cartBlueprints(existingBlueprint.getCartBlueprints())
+        Diabetes updatedDiabetes = Diabetes.builder()
+                .id(existingDiabetes.getId())
+                .diabetesName(diabetesResponse.diabetesName())
+                .categoryId(diabetesResponse.categoryId())
+                .secondCategory(diabetesResponse.secondCategory())
+                .standardPrice(diabetesResponse.standardPrice())
+                .diabetesImg(diabetesResponse.diabetesImg())
+                .diabetesDetailsImg(diabetesResponse.diabetesDetailsImg())
+                .capacity(diabetesResponse.capacity())
+                .calorie(diabetesResponse.calorie())
+                .storage(diabetesResponse.storage())
+                .hits(diabetesResponse.hits())
+                .salePrice(diabetesResponse.salePrice())
+                .saleExpiredDate(diabetesResponse.saleExpiredDate())
                 .build();
 
-        blueprintRepository.save(updatedBlueprint);
+        diabetesRepository.save(updatedDiabetes);
         return true;
     }
 
-    public boolean deleteBlueprint(Long id){
-        blueprintRepository.deleteById(id);
+    public boolean deleteDiabetes(Long id) {
+        diabetesRepository.deleteById(id);
         return true;
-    };
-
-    public Page<SearchResponse> searchNameAndCreatorWithKeyword(String keyword, Pageable pageable) {
-        Page<Blueprint> result = blueprintRepository.findAllNameAndCreatorContaining(keyword, pageable);
-        List<SearchResponse> list = result.getContent().stream()
-                .map(SearchResponse::from)
-                .collect(Collectors.toList());
-        return new PageImpl<>(list, pageable, result.getTotalElements());
     }
 
-    public Page<SearchResponse> findAllByFirstCategory(FirstCategoryType category, Pageable pageable) {
-        Page<Blueprint> result = blueprintRepository.findAllByFirstCategory(category.getType(), pageable);
-        List<SearchResponse> list = result.getContent().stream()
-                .map(SearchResponse::from)
-                .collect(Collectors.toList());
-        return new PageImpl<>(list, pageable, result.getTotalElements());
-    }
-
-    public Page<SearchResponse> findAllBySecondCategory(FirstCategoryType firstCategory, String secondCategory, Pageable pageable) {
-        Page<Blueprint> result = blueprintRepository.findAllBySecondCategory(
-                firstCategory.getType(), secondCategory, pageable);
-        List<SearchResponse> list = result.getContent().stream()
-                .map(SearchResponse::from)
-                .collect(Collectors.toList());
-        return new PageImpl<>(list, pageable, result.getTotalElements());
-    }
-
-    public Page<SearchResponse> findAll(Pageable pageable) {
-        Page<Blueprint> result = blueprintRepository.findAll(pageable);
-        List<SearchResponse> list = result.getContent().stream()
-                .map(SearchResponse::from)
-                .collect(Collectors.toList());
-        return new PageImpl<>(list, pageable, result.getTotalElements());
-    }
 }
