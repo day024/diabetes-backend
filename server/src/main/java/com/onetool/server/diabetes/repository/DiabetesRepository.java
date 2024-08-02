@@ -22,4 +22,6 @@ public interface DiabetesRepository extends JpaRepository<Diabetes, Long> {
 
     @Query("SELECT count(d) FROM Diabetes d")
     Long countAllDiabetes();
+
+    Optional<Diabetes> findByDiabetesName(String diabetesName);
 }
