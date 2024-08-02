@@ -17,7 +17,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 @Controller
 public class DiabetesSearchController {
 
-    private DiabetesService diabetesService;
+    private final DiabetesService diabetesService;
 
     public DiabetesSearchController(DiabetesService diabetesService) {
         this.diabetesService = diabetesService;
