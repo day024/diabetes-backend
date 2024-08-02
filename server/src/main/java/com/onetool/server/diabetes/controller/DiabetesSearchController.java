@@ -35,7 +35,7 @@ public class DiabetesSearchController {
     @GetMapping("/diabetes/c")
     public ResponseEntity searchCategory1(
             @PageableDefault(size = 5, sort = "id", direction = Sort.Direction.DESC)Pageable pageable,
-            @RequestParam String category
+            @RequestParam("category") String category
     ) {
         Page<DiabetesSearchResponse> responses = diabetesService.findAllByFirstCategory(category, pageable);
         return ResponseEntity.ok().body(responses);
