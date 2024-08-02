@@ -8,7 +8,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/diabetes")
+@RequestMapping("/food")
 public class DiabetesController {
     @Autowired
     private DiabetesService diabetesService;
