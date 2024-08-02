@@ -18,12 +18,12 @@ public class Diabetes extends BaseEntity {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
-    @Column(name="diabetes_name")
+    @Column(name="diabetes_name",unique = true)
     private String diabetesName;
     private String category;
     @Column(name = "standard_price")
     private Long standardPrice;
-    @Column(name = "diabetes_details")
+    @Column(name = "diabetes_details", columnDefinition = "TEXT")
     private String diabetesDetails;
     @Column(name = "diabetes_img")
     private String diabetesImg;

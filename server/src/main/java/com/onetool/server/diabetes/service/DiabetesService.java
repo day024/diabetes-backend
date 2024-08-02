@@ -64,6 +64,9 @@ public class DiabetesService {
     }
 
     public Diabetes saveDiabetes(Diabetes diabetes) {
+        if (diabetesRepository.findByDiabetesName(diabetes.getDiabetesName()).isPresent()) {
+            throw new RuntimeException("이미 존재하는 이름입니다.");
+        }
         return diabetesRepository.save(diabetes);
     }
 
