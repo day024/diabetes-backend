@@ -20,8 +20,7 @@ public class Diabetes extends BaseEntity {
 
     @Column(name="diabetes_name")
     private String diabetesName;
-    @Column(name="category_id")
-    private Long categoryId;
+    private String category;
     @Column(name = "standard_price")
     private Long standardPrice;
     @Column(name = "diabetes_details")
@@ -52,10 +51,10 @@ public class Diabetes extends BaseEntity {
 //    private List<CartBlueprint> cartBlueprints = new ArrayList<>();
 
     @Builder
-    public Diabetes(Long id, String diabetesName, Long categoryId, Long standardPrice, String diabetesDetails, String diabetesImg, String diabetesDetailsImg, String capacity, String calorie, String storage, BigInteger hits, Long salePrice, LocalDateTime saleExpiredDate) {
+    public Diabetes(Long id, String diabetesName, String category, Long standardPrice, String diabetesDetails, String diabetesImg, String diabetesDetailsImg, String capacity, String calorie, String storage, BigInteger hits, Long salePrice, LocalDateTime saleExpiredDate) {
         this.id = id;
         this.diabetesName = diabetesName;
-        this.categoryId = categoryId;
+        this.category = category;
         this.standardPrice = standardPrice;
         this.diabetesDetails = diabetesDetails;
         this.diabetesImg = diabetesImg;
@@ -67,5 +66,4 @@ public class Diabetes extends BaseEntity {
         this.salePrice = salePrice;
         this.saleExpiredDate = saleExpiredDate;
     }
-
 }

@@ -8,7 +8,7 @@ import java.time.LocalDateTime;
 public record DiabetesRequest(
         Long id,
         String diabetesName,
-        Long categoryId,
+        String category,
         Long standardPrice,
         String diabetesDetails,
         String diabetesImg,
@@ -25,7 +25,7 @@ public record DiabetesRequest(
         return new DiabetesRequest(
                 diabetes.getId(),
                 diabetes.getDiabetesName(),
-                diabetes.getCategoryId(),
+                diabetes.getCategory(),
                 diabetes.getStandardPrice(),
                 diabetes.getDiabetesDetails(),
                 diabetes.getDiabetesImg(),

@@ -17,8 +17,8 @@ public interface DiabetesRepository extends JpaRepository<Diabetes, Long> {
     @Query("SELECT d FROM Diabetes d WHERE d.diabetesName LIKE %:keyword% ")
     Page<Diabetes> searchByNameWithKeyword(@Param("keyword") String keyword, Pageable pageable);
 
-    @Query("SELECT b FROM Diabetes b WHERE b.categoryId IN (SELECT f.id FROM FirstCategory f WHERE f.name = :first)")
-    Page<Diabetes> findAllByFirstCategory(@Param("first") String category, Pageable pageable);
+    @Query("SELECT b FROM Diabetes b WHERE b.category = :category")
+    Page<Diabetes> findAllByFirstCategory(@Param("category") String category, Pageable pageable);
 
     @Query("SELECT count(d) FROM Diabetes d")
     Long countAllDiabetes();

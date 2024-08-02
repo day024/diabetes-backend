@@ -125,7 +125,7 @@ public class TestDataLoader implements CommandLineRunner {
             diabetesRepository.save(
                     Diabetes.builder()
                             .diabetesName("토마토포크스튜 세트")
-                            .categoryId(7L)
+                            .category("category1")
                             .standardPrice(9500L)
                             .diabetesDetails("전자레인지에 데우기만 하면 풍미 깊은 따뜻한 포크 스튜를 준비했어요.")
                             .diabetesImg("https://image.greating.co.kr/IL/item/202309/27/B_A914A19892F74F9295E976B482198BE0.jpg")
@@ -138,7 +138,7 @@ public class TestDataLoader implements CommandLineRunner {
             diabetesRepository.save(
                     Diabetes.builder()
                             .diabetesName("취나물 소불고기 & 두부 찹스테이크 세트")
-                            .categoryId(8L)
+                            .category("category2")
                             .standardPrice(9500L)
                             .diabetesDetails("향긋한 취나물을 넣어 만든 소불고기를 준비했어요.")
                             .diabetesImg("https://image.greating.co.kr/IL/item/202309/27/B_C5E1A04F09EF4639B7A93B685E44804B.jpg")
@@ -151,7 +151,7 @@ public class TestDataLoader implements CommandLineRunner {
             diabetesRepository.save(
                     Diabetes.builder()
                             .diabetesName("쿵파오 치킨 세트")
-                            .categoryId(9L)
+                            .category("category3")
                             .standardPrice(9500L)
                             .diabetesDetails("신선한 닭고기와 고추의 매콤함 그리고 땅콩의 고소함이 잘 어우러진 쿵파오 치킨을 소개해요.")
                             .diabetesImg("https://image.greating.co.kr/IL/item/202310/11/B_3780A886A0694FC18BA8638036FD07A8.jpg")
@@ -164,7 +164,7 @@ public class TestDataLoader implements CommandLineRunner {
             diabetesRepository.save(
                     Diabetes.builder()
                             .diabetesName("숙주 소불고기 세트")
-                            .categoryId(10L)
+                            .category("category4")
                             .standardPrice(9500L)
                             .diabetesDetails("한국인이라면 누구나 좋아하는 달큰한 소불고기 요리를 준비했어요.")
                             .diabetesImg("https://image.greating.co.kr/IL/item/202310/11/B_3780A886A0694FC18BA8638036FD07A8.jpg")
@@ -177,7 +177,7 @@ public class TestDataLoader implements CommandLineRunner {
             diabetesRepository.save(
                     Diabetes.builder()
                             .diabetesName("돼지고기 톳볶음 & 닭살 김치찜 세트")
-                            .categoryId(11L)
+                            .category("category5")
                             .standardPrice(9500L)
                             .diabetesDetails("바다의 불로초라 불리는 톳은 철, 칼슘 등 무기질이 풍부한 건강 식재료예요.")
                             .diabetesImg("https://image.greating.co.kr/IL/item/202308/09/B_C5B41B0341344345B5011A2F9A93F458.jpg")
@@ -190,7 +190,7 @@ public class TestDataLoader implements CommandLineRunner {
             diabetesRepository.save(
                     Diabetes.builder()
                             .diabetesName("전복내장톳솥밥 세트")
-                            .categoryId(6L)
+                            .category("category1")
                             .standardPrice(9500L)
                             .diabetesDetails("영양 가득한 전복 내장을 넣고 고슬고슬하게 지은 솥밥을 소개해요.")
                             .diabetesImg("https://image.greating.co.kr/IL/item/202303/15/B_FB37A93F7C3F4E47925E15C1C45C9ADB.jpg")

@@ -32,56 +32,12 @@ public class DiabetesSearchController {
         return ResponseEntity.ok().body(response);
     }
 
-    @GetMapping("/diabetes/category1")
+    @GetMapping("/diabetes/c")
     public ResponseEntity searchCategory1(
             @PageableDefault(size = 5, sort = "id", direction = Sort.Direction.DESC)Pageable pageable,
-            @RequestParam(required = false) String category
+            @RequestParam String category
     ) {
-        Page<DiabetesSearchResponse> responses = diabetesService.findAllByFirstCategory(FirstCategoryType.CATEGORY_CATEGORY1, pageable);
-        return ResponseEntity.ok().body(responses);
-    }
-
-    @GetMapping("/diabetes/category2")
-    public ResponseEntity searchCategory2(
-            @PageableDefault(size = 5, sort = "id", direction = Sort.Direction.DESC)Pageable pageable,
-            @RequestParam(required = false) String category
-    ) {
-        Page<DiabetesSearchResponse> responses = diabetesService.findAllByFirstCategory(FirstCategoryType.CATEGORY_CATEGORY2, pageable);
-        return ResponseEntity.ok().body(responses);
-    }
-
-    @GetMapping("/diabetes/category3")
-    public ResponseEntity searchCategory3(
-            @PageableDefault(size = 5, sort = "id", direction = Sort.Direction.DESC)Pageable pageable,
-            @RequestParam(required = false) String category
-    ) {
-        Page<DiabetesSearchResponse> responses = diabetesService.findAllByFirstCategory(FirstCategoryType.CATEGORY_CATEGORY3, pageable);
-        return ResponseEntity.ok().body(responses);
-    }
-
-    @GetMapping("/diabetes/category4")
-    public ResponseEntity searchCategory4(
-            @PageableDefault(size = 5, sort = "id", direction = Sort.Direction.DESC)Pageable pageable,
-            @RequestParam(required = false) String category
-    ) {
-        Page<DiabetesSearchResponse> responses = diabetesService.findAllByFirstCategory(FirstCategoryType.CATEGORY_CATEGORY4, pageable);
-        return ResponseEntity.ok().body(responses);
-    }
-
-    @GetMapping("/diabetes/category5")
-    public ResponseEntity searchCategory5(
-            @PageableDefault(size = 5, sort = "id", direction = Sort.Direction.DESC)Pageable pageable,
-            @RequestParam(required = false) String category
-    ) {
-        Page<DiabetesSearchResponse> responses = diabetesService.findAllByFirstCategory(FirstCategoryType.CATEGORY_CATEGORY5, pageable);
-        return ResponseEntity.ok().body(responses);
-    }
-
-    @GetMapping("/diabetes/etc")
-    public ResponseEntity searchEtcCategory(
-            @PageableDefault(page = 0, size = 10, sort = "id", direction = Sort.Direction.DESC)Pageable pageable
-    ) {
-        Page<DiabetesSearchResponse> responses = diabetesService.findAllByFirstCategory(FirstCategoryType.CATEGORY_ETC, pageable);
+        Page<DiabetesSearchResponse> responses = diabetesService.findAllByFirstCategory(category, pageable);
         return ResponseEntity.ok().body(responses);
     }
 

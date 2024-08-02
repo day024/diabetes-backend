@@ -43,7 +43,7 @@ public class DiabetesService {
             Diabetes diabetes = Diabetes.builder()
                     .id(diabetesRequest.id())
                     .diabetesName(diabetesRequest.diabetesName())
-                    .categoryId(diabetesRequest.categoryId())
+                    .category(diabetesRequest.category())
                     .standardPrice(diabetesRequest.standardPrice())
                     .diabetesDetails(diabetesRequest.diabetesDetails())
                     .diabetesImg(diabetesRequest.diabetesImg())
@@ -74,7 +74,7 @@ public class DiabetesService {
         Diabetes updatedDiabetes = Diabetes.builder()
                 .id(existingDiabetes.getId())
                 .diabetesName(diabetesResponse.diabetesName())
-                .categoryId(diabetesResponse.categoryId())
+                .category(diabetesResponse.category())
                 .standardPrice(diabetesResponse.standardPrice())
                 .diabetesDetails(diabetesResponse.diabetesDetails())
                 .diabetesImg(diabetesResponse.diabetesImg())
@@ -104,8 +104,8 @@ public class DiabetesService {
         return new PageImpl<>(list, pageable, result.getTotalElements());
     }
 
-    public Page<DiabetesSearchResponse> findAllByFirstCategory(FirstCategoryType firstCategory, Pageable pageable) {
-        Page<Diabetes> result = diabetesRepository.findAllByFirstCategory(firstCategory.getType(), pageable);
+    public Page<DiabetesSearchResponse> findAllByFirstCategory(String category, Pageable pageable) {
+        Page<Diabetes> result = diabetesRepository.findAllByFirstCategory(category, pageable);
         List<DiabetesSearchResponse> list = result.getContent().stream()
                 .map(DiabetesSearchResponse::from)
                 .collect(Collectors.toList());

@@ -10,7 +10,7 @@ import java.time.LocalDateTime;
 public record DiabetesResponse(
         Long id,
         String diabetesName,
-        Long categoryId,
+        String category,
         Long standardPrice,
         String diabetesDetails,
         String diabetesImg,
@@ -27,7 +27,7 @@ public record DiabetesResponse(
         return new DiabetesResponse(
                 diabetes.getId(),
                 diabetes.getDiabetesName(),
-                diabetes.getCategoryId(),
+                diabetes.getCategory(),
                 diabetes.getStandardPrice(),
                 diabetes.getDiabetesDetails(),
                 diabetes.getDiabetesImg(),
