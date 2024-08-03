@@ -1,6 +1,7 @@
 package com.onetool.server.cart.service;
 
 import com.onetool.server.blueprint.Blueprint;
+import com.onetool.server.diabetes.Diabetes;
 import com.onetool.server.global.auth.MemberAuthContext;
 import com.onetool.server.member.domain.Member;
 
@@ -15,5 +16,5 @@ public interface CartService {
 
     Member findMemberWithCart(Long id);
 
-    Blueprint getBlueprint(Long blueprintId);
+    Diabetes getDiabetes(Long blueprintId);
 }

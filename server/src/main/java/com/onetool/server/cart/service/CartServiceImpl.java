@@ -6,6 +6,8 @@ import com.onetool.server.cart.Cart;
 import com.onetool.server.cart.CartBlueprint;
 import com.onetool.server.cart.repository.CartBlueprintRepository;
 import com.onetool.server.cart.repository.CartRepository;
+import com.onetool.server.diabetes.Diabetes;
+import com.onetool.server.diabetes.repository.DiabetesRepository;
 import com.onetool.server.global.auth.MemberAuthContext;
 import com.onetool.server.global.exception.BaseException;
 import com.onetool.server.member.domain.Member;
@@ -15,6 +17,7 @@ import org.springframework.stereotype.Service;
 
 import static com.onetool.server.cart.dto.CartResponse.CartItems;
 import static com.onetool.server.global.exception.codes.ErrorCode.*;
+import static com.onetool.server.global.exception.codes.ErrorCode.ALREADY_EXIST_BLUEPRINT_IN_CART;
 
 @Service
 @RequiredArgsConstructor
@@ -24,16 +27,17 @@ public class CartServiceImpl implements CartService{
     private final MemberRepository memberRepository;
     private final BlueprintRepository blueprintRepository;
     private final CartBlueprintRepository cartBlueprintRepository;
+    private final DiabetesRepository diabetesRepository;
 
     public Object showCart(MemberAuthContext user){
         Member member = findMemberWithCart(user.getId());
         Cart cart = member.getCart();
-        if(cart == null) return "장바구니에 상품이 없습니다.";
+        if(cart.getCartItems().isEmpty()) return "장바구니에 상품이 없습니다.";
         return CartItems.cartItems(cart.getTotalPrice(), cart.getCartItems());
     }
 
     public String addBlueprintToCart(MemberAuthContext user,
-                                   Long blueprintId){
+                                   Long foodId){
         Member member = findMemberWithCart(user.getId());
         Cart cart = member.getCart();
         if (cart == null) {
@@ -41,18 +45,19 @@ public class CartServiceImpl implements CartService{
             cartRepository.save(cart);
         }
 
-        Blueprint blueprint = getBlueprint(blueprintId);
-        CartBlueprint existingCartBlueprint = cartBlueprintRepository.findByCartAndBlueprint(cart, blueprint);
-
+        Diabetes diabetes = getDiabetes(foodId);
+        if(cartBlueprintRepository.existsByCartAndDiabetes(cart, diabetes)){
+            throw new BaseException(ALREADY_EXIST_BLUEPRINT_IN_CART);
+        }
         // 새로운 상품을 추가합니다.
-        CartBlueprint newCartBlueprint = CartBlueprint.newCartBlueprint(cart, blueprint);
+        CartBlueprint newCartBlueprint = CartBlueprint.newCartBlueprint(cart, diabetes );
 
         cartBlueprintRepository.save(newCartBlueprint);
         cart.getCartItems().add(newCartBlueprint);
 
         // 총 가격을 업데이트합니다. 일단 정가를 더했음
         cart.updateTotalPrice(cart.getCartItems().stream()
-                .mapToLong(item -> item.getBlueprint().getStandardPrice())
+                .mapToLong(item -> item.getDiabetes().getStandardPrice())
                 .sum());
 
         cartRepository.save(cart);
@@ -60,29 +65,29 @@ public class CartServiceImpl implements CartService{
     }
 
     public String deleteBlueprintInCart(MemberAuthContext user,
-                                      Long blueprintId){
+                                      Long foodId){
         Member member = findMemberWithCart(user.getId());
         Cart cart = member.getCart();
         if(cart == null){
             throw new BaseException(NO_ITEM_IN_CART);
         }
         CartBlueprint cartBlueprint = cart.getCartItems().stream()
-                .filter(cartItem -> cartItem.getBlueprint().getId().equals(blueprintId))
+                .filter(cartItem -> cartItem.getDiabetes().getId().equals(foodId))
                 .findFirst()
                 .orElseThrow(() -> new BaseException(NO_BLUEPRINT_FOUND));
         cart.getCartItems().remove(cartBlueprint);
         cartBlueprintRepository.delete(cartBlueprint);
 
         cart.updateTotalPrice(cart.getCartItems().stream()
-                .mapToLong(item -> item.getBlueprint().getStandardPrice())
+                .mapToLong(item -> item.getDiabetes().getStandardPrice())
                 .sum());
 
         cartRepository.save(cart);
         return "삭제됐습니다.";
     }
 
-    public Blueprint getBlueprint(Long blueprintId) {
-        return blueprintRepository.findById(blueprintId).orElseThrow(() -> new BaseException(NO_BLUEPRINT_FOUND));
+    public Diabetes getDiabetes(Long foodId) {
+        return diabetesRepository.findById(foodId).orElseThrow(() -> new BaseException(NO_BLUEPRINT_FOUND));
     }
 
     public Member findMemberWithCart(Long id) {

@@ -11,7 +11,7 @@ import org.springframework.stereotype.Repository;
 
 import java.util.Optional;
 
-@Repository
+
 public interface DiabetesRepository extends JpaRepository<Diabetes, Long> {
 
     @Query("SELECT d FROM Diabetes d WHERE d.diabetesName LIKE %:keyword% ")
@@ -24,4 +24,6 @@ public interface DiabetesRepository extends JpaRepository<Diabetes, Long> {
     Long countAllDiabetes();
 
     Optional<Diabetes> findByDiabetesName(String diabetesName);
+
+    Optional<Diabetes> findById(Long id);
 }

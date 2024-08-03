@@ -16,13 +16,13 @@ public class CartController {
     /**
      * 도면 상세페이지에서 장바구니에 추가
      * @param principal
-     * @param blueprintId
+     * @param foodId
      * @return
      */
-    @PostMapping("/api/cart/add/{blueprintId}")
+    @PostMapping("/api/cart/add/{foodId}")
     public ApiResponse<?> addBlueprintToCart(@AuthenticationPrincipal PrincipalDetails principal,
-                                             @PathVariable Long blueprintId){
-        return ApiResponse.onSuccess(cartService.addBlueprintToCart(principal.getContext(), blueprintId));
+                                             @PathVariable Long foodId){
+        return ApiResponse.onSuccess(cartService.addBlueprintToCart(principal.getContext(), foodId));
     }
 
     @GetMapping("/cart")
@@ -30,9 +30,9 @@ public class CartController {
         return ApiResponse.onSuccess(cartService.showCart(principal.getContext()));
     }
 
-    @DeleteMapping("/api/cart/delete/{blueprintId}")
+    @DeleteMapping("/api/cart/delete/{foodId}")
     public ApiResponse<?> deleteBlueprintInCart(@AuthenticationPrincipal PrincipalDetails principal,
-                                                @PathVariable Long blueprintId){
-        return ApiResponse.onSuccess(cartService.deleteBlueprintInCart(principal.getContext(), blueprintId));
+                                                @PathVariable Long foodId){
+        return ApiResponse.onSuccess(cartService.deleteBlueprintInCart(principal.getContext(), foodId));
     }
 }
