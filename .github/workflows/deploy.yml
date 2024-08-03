@@ -9,6 +9,8 @@ on:
     branches:
       - main
 
+env:
+
 # 하나의 워크플로우에 1개 이상의 잡
 # 잡은 병렬 수행
 jobs:
@@ -36,7 +38,7 @@ jobs:
       - name: Docker 이미지 만들고 Dockerhub에 푸시
         run: |
           docker login -u ${{secrets.DOCKER_USERNAME}} -p ${{secrets.DOCKER_PASSWORD}}
-          docker build -t ${{secrets.DOCKER_REPO}}/diabet-server:latest .
+          docker build -t ${{secrets.DOCKER_REPO}}/diabet-server:${{github.sha}} .
           docker push ${{secrets.DOCKER_REPO}}/diabet-server:${{github.sha}}
 
       - name: EC2에서 이미지 pull 후, 컨테이너 실행
