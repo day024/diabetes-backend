@@ -21,6 +21,10 @@ jobs:
           submodules: true
           token: ${{secrets.PAT_TOKEN}}
 
+      - name: application-dev 복사
+        run: |
+          cp ./backend_submodule/application-dev.properties ./server/src/main/resources
+
       - name: JDK 17 설치
         uses: actions/setup-java@v3
         with:
