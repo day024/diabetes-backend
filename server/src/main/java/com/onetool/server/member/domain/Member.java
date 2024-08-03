@@ -41,7 +41,7 @@ public class Member extends BaseEntity {
     @Column(name = "birth_date") @Past
     private LocalDate birthDate;
 
-    @Column(name = "phone_num") @Size(min = 10, max = 11)
+    @Column(name = "phone_num")
     private String phoneNum;
 
     @Column(name = "user_role")

@@ -78,7 +78,7 @@ public class MemberController {
         return ResponseEntity.ok("회원 정보가 수정되었습니다.");
     }
 
-    @DeleteMapping("users/{id}")
+    @DeleteMapping("/{id}")
     public ResponseEntity<String> deleteMember(@PathVariable Long id,
                                                @RequestParam("password") String password,
                                                @AuthenticationPrincipal PrincipalDetails principalDetails) {
@@ -90,5 +90,11 @@ public class MemberController {
         } else {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("비밀번호가 일치하지 않습니다.");
         }
+    }
+
+    @PostMapping("/email")
+    public  ResponseEntity findEmail(@RequestBody MemberFindEmailRequest request) {
+        String email = memberService.findEmail(request);
+        return ResponseEntity.ok(email);
     }
 }

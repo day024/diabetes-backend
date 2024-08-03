@@ -3,6 +3,7 @@ package com.onetool.server.global.config;
 
 import com.onetool.server.global.auth.CustomAccessDeniedHandler;
 import com.onetool.server.global.auth.CustomAuthenticationEntryPoint;
+import com.onetool.server.global.auth.WhiteListVO;
 import com.onetool.server.global.auth.filter.JwtAuthFilter;
 import com.onetool.server.global.auth.jwt.JwtUtil;
 import com.onetool.server.global.auth.login.handler.OAuth2LoginFailureHandler;
@@ -15,6 +16,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.config.annotation.web.configuration.WebSecurityCustomizer;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.config.annotation.web.configurers.HeadersConfigurer;
 import org.springframework.security.config.http.SessionCreationPolicy;
@@ -36,9 +38,7 @@ public class SecurityConfig {
     private final OAuth2LoginFailureHandler oAuth2LoginFailureHandler;
     private final CustomOAuth2UserService customOAuth2UserService;
 
-    private static final String[] AUTH_WHITELIST = {
-            "/users/**", "/login/**", "/food/**", "/oauth2/**", "/diabetes/**"
-    };
+    private final WhiteListVO whiteListVO = new WhiteListVO();
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
@@ -51,12 +51,13 @@ public class SecurityConfig {
                 ))
                 .formLogin(AbstractHttpConfigurer::disable)
                 .httpBasic(AbstractHttpConfigurer::disable)
+
                 .addFilterBefore(new JwtAuthFilter(customUserDetailsService, jwtUtil), UsernamePasswordAuthenticationFilter.class)
                 .exceptionHandling((exceptionHandling) -> exceptionHandling
                         .authenticationEntryPoint(authenticationEntryPoint)
                         .accessDeniedHandler(accessDeniedHandler))
                 .authorizeHttpRequests(authorize -> authorize
-                        .requestMatchers(AUTH_WHITELIST).permitAll()
+                        .requestMatchers(whiteListVO.getAUTH_WHITELIST()).permitAll()
                         .anyRequest().authenticated())
                 .oauth2Login(auth -> {
                     auth.successHandler(oAuth2LoginSuccessHandler)
@@ -80,5 +81,10 @@ public class SecurityConfig {
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
         source.registerCorsConfiguration("/**", configuration);
         return source;
+    }
+
+    @Bean
+    public WebSecurityCustomizer webSecurityCustomizer() {
+        return (web) -> web.ignoring().requestMatchers(whiteListVO.getAUTH_WHITELIST());
     }
 }

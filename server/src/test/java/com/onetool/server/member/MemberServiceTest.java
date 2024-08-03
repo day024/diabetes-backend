@@ -1,6 +1,7 @@
 package com.onetool.server.member;
 
 import com.onetool.server.member.dto.MemberCreateResponse;
+import com.onetool.server.member.service.MemberService;
 import io.restassured.RestAssured;
 import io.restassured.http.ContentType;
 import io.restassured.path.json.JsonPath;
@@ -9,6 +10,7 @@ import io.restassured.response.Response;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.HttpStatus;
 import org.springframework.test.annotation.DirtiesContext;
@@ -23,6 +25,9 @@ import static org.junit.jupiter.api.Assertions.assertAll;
 public class MemberServiceTest {
 
     private ExtractableResponse<Response> memberCreateResponse;
+
+    @Autowired
+    private MemberService memberService;
 
     @Test
     void create_member() {
@@ -75,5 +80,28 @@ public class MemberServiceTest {
                 () -> assertThat(deleteResponse.statusCode()).isEqualTo(HttpStatus.OK.value()),
                 () -> assertThat(deleteResponse.body().asString()).isEqualTo("회원 탈퇴가 완료되었습니다.")
         );
+    }
+
+    @Test
+    @DisplayName("이메일 찾기 테스트")
+    void find_email() {
+        create_member();
+
+        // given
+        final Map<String, Object> params = Map.of(
+                "name", "홍길동",
+                "birth_date", "2001-03-26"
+        );
+
+        // when
+        final ExtractableResponse<Response> response = RestAssured.given().log().all()
+                .contentType(ContentType.JSON)
+                .body(params)
+                .when().post("/users/email")
+                .then().log().all()
+                .extract();
+
+        // then
+        assertThat(response.body().toString()).isEqualTo("sungwon326@naver.com");
     }
 }
