@@ -29,10 +29,10 @@ jobs:
 
       - name: Spring Project 빌드하기
         run: |
-          cat ./server/src/main/resources/application-dev.properties
           cd ./server/
           chmod +x ./gradlew
           ./gradlew clean build -x test
+          cat ./server/src/main/resources/application-dev.properties
 
       - name: Docker 이미지 만들고 Dockerhub에 푸시
         run: |
