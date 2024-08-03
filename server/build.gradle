@@ -63,12 +63,9 @@ tasks.named('test') {
 processResources.dependsOn('copyModule')
 
 tasks.register('copyModule', Copy) {
-	description = 'Copy submodules to project'
-
 	copy {
-		from ('../backend_submodule') {
-			include "*.properties"
-		}
-		into '/src/main/resources'
+		from './backend_submodule'
+		include 'application-dev.properties'
+		into './server/src/main/resources'
 	}
 }
