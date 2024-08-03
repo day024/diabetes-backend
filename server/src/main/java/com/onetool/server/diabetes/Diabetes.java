@@ -1,5 +1,6 @@
 package com.onetool.server.diabetes;
 
+import com.onetool.server.cart.CartBlueprint;
 import com.onetool.server.global.entity.BaseEntity;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
@@ -9,6 +10,8 @@ import lombok.NoArgsConstructor;
 
 import java.math.BigInteger;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Getter
@@ -41,6 +44,9 @@ public class Diabetes extends BaseEntity {
     private Long salePrice;
     @Column(name = "sale_expired_date")
     private LocalDateTime saleExpiredDate;
+
+    @OneToMany(mappedBy = "diabetes")
+    private List<CartBlueprint> cartBlueprints = new ArrayList<>();
 
     //TODO 일단 장바구니&주문 맵핑 나중에
 //    @ManyToOne(fetch = FetchType.LAZY)

@@ -1,6 +1,7 @@
 package com.onetool.server.cart;
 
 import com.onetool.server.blueprint.Blueprint;
+import com.onetool.server.diabetes.Diabetes;
 import com.onetool.server.global.entity.BaseEntity;
 import jakarta.persistence.*;
 import lombok.*;
@@ -20,19 +21,23 @@ public class CartBlueprint extends BaseEntity {
 
     //도면 상품은 도면 엔티티가 나오는 대로 짤게요
     @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "diabetes_id")
+    private Diabetes diabetes;
+
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "blueprint_id")
     private Blueprint blueprint;
 
     @Builder
-    private CartBlueprint(Cart cart, Blueprint blueprint){
+    private CartBlueprint(Cart cart, Diabetes diabetes){
         this.cart = cart;
-        this.blueprint = blueprint;
+        this.diabetes = diabetes;
     }
 
-    public static CartBlueprint newCartBlueprint(Cart cart, Blueprint blueprint){
+    public static CartBlueprint newCartBlueprint(Cart cart, Diabetes diabetes){
         return CartBlueprint.builder()
                 .cart(cart)
-                .blueprint(blueprint)
+                .diabetes(diabetes)
                 .build();
     }
 

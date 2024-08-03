@@ -79,6 +79,7 @@ public enum ErrorCode implements BaseCode {
 
     //장바구니 에러
     NO_ITEM_IN_CART(HttpStatus.NO_CONTENT, "CART-0000", "장바구니에 상품이 없습니다."),
+    ALREADY_EXIST_BLUEPRINT_IN_CART(HttpStatus.BAD_REQUEST, "CART-0001", "장바구니에 존재하는 상품입니다."),
 
 
     //Qna 에러

@@ -91,7 +91,7 @@ public class Member extends BaseEntity {
         this.socialId = socialId;
         this.qnaBoards = qnaBoards;
         this.qnaReplies = qnaReplies;
-        this.cart = cart;
+        this.cart = Cart.createCart(this);
     }
 
     public Member updateWith(MemberUpdateRequest request) {
@@ -115,9 +115,5 @@ public class Member extends BaseEntity {
 
     public void updatePassword(String newPassword, PasswordEncoder encoder) {
         this.password = encoder.encode(newPassword);
-    }
-
-    public void initCart(Cart cart) {
-        this.cart = cart;
     }
 }
