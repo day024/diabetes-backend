@@ -55,7 +55,8 @@ public class MemberService {
 
         Member member = memberRepository.findByEmail(email).orElseThrow(MemberNotFoundException::new);
         log.info("============== 로그인 유저 정보 ===============");
-        log.info(member.toString());
+        log.info(member.getEmail());
+        log.info(member.getPassword());
 
         if(!encoder.matches(password, member.getPassword())){
             throw new BadCredentialsException("비밀번호가 일치하지 않습니다.");
