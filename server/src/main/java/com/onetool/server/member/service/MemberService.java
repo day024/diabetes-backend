@@ -7,6 +7,7 @@ import com.onetool.server.global.exception.DuplicateMemberException;
 import com.onetool.server.global.exception.MemberNotFoundException;
 import com.onetool.server.global.redis.RedisService;
 import com.onetool.server.mail.MailService;
+import com.onetool.server.member.domain.DateTimeFormat;
 import com.onetool.server.member.dto.*;
 import com.onetool.server.member.repository.MemberRepository;
 import com.onetool.server.member.domain.Member;
@@ -21,6 +22,7 @@ import javax.swing.text.html.Option;
 import java.security.NoSuchAlgorithmException;
 import java.security.SecureRandom;
 import java.time.Duration;
+import java.time.LocalDate;
 import java.util.Optional;
 import java.util.Random;
 
@@ -159,5 +161,13 @@ public class MemberService {
             log.debug("MemberService.createRandomPassword() exception occur");
             throw new BusinessLogicException();
         }
+    }
+
+    public String findEmail(MemberFindEmailRequest request) {
+        String name = request.name();
+        LocalDate birthDate = LocalDate.parse(request.birth_date(), DateTimeFormat.dateFormat);
+        Member member = memberRepository.findByNameAndBirthDate(name, birthDate)
+                .orElseThrow(MemberNotFoundException::new);
+        return member.getEmail();
     }
 }
