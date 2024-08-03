@@ -24,6 +24,7 @@ jobs:
       - name: application-dev 복사
         run: |
           git submodule update --remote
+          cat ./backend_submodule/application-dev.properties
           cp ./backend_submodule/application-dev.properties ./server/src/main/resources/application-dev.properties
 
       - name: JDK 17 설치
