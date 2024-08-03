@@ -30,10 +30,8 @@ public class MemberController {
             @Valid @RequestBody LoginRequest request
     ) {
         String token = memberService.login(request);
-        HttpHeaders headers = new HttpHeaders();
-        headers.set("Authorization", "Bearer " + token);
 
-        return new ResponseEntity<>("유저가 로그인되었습니다.",headers, HttpStatus.OK);
+        return ResponseEntity.ok().body(token);
     }
 
     @PostMapping("/signup")
