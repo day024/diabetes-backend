@@ -63,8 +63,6 @@ tasks.named('test') {
 processResources.dependsOn('copyModule')
 
 tasks.register('copyModule', Copy) {
-
-
 	from ('../backend_submodule/application-dev.properties') {
 		include('*.properties')
 	}
