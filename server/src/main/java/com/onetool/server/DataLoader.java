@@ -11,7 +11,6 @@ import org.springframework.stereotype.Component;
 
 import java.util.Optional;
 
-@Profile("default")
 @Component
 public class DataLoader implements CommandLineRunner {
 
