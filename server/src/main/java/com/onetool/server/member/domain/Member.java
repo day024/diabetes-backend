@@ -94,26 +94,12 @@ public class Member extends BaseEntity {
         this.cart = Cart.createCart(this);
     }
 
-    public Member updateWith(MemberUpdateRequest request) {
-        return Member.builder()
-                .id(this.id)
-                .email(request.getEmail() != null ? request.getEmail() : this.email)
-                .name(request.getName() != null ? request.getName() : this.name)
-                .birthDate(this.birthDate)
-                .field(request.getDevelopmentField() != null ? request.getDevelopmentField() : this.field)
-                .phoneNum(request.getPhoneNum() != null ? request.getPhoneNum() : this.phoneNum)
-                .isNative(this.isNative)
-                .serviceAccept(this.serviceAccept)
-                .platformType(this.platformType)
-                .socialType(this.socialType)
-                .socialId(this.socialId)
-                .qnaBoards(this.qnaBoards)
-                .qnaReplies(this.qnaReplies)
-                .cart(this.cart)
-                .build();
+    public void updateWith(MemberUpdateRequest request) {
+            this.name = request.getName() != null ? request.getName() : this.name;
+            this.phoneNum = request.getPhoneNum() != null ? request.getPhoneNum() : this.phoneNum;
     }
 
-    public void updatePassword(String newPassword, PasswordEncoder encoder) {
-        this.password = encoder.encode(newPassword);
+    public void updatePassword(String encoded) {
+        this.password = encoded;
     }
 }

@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 
 import java.net.URI;
+import java.util.Objects;
 
 @Controller
 @RequestMapping("/users")
@@ -65,11 +66,15 @@ public class MemberController {
         }
     }
 
-    @PutMapping("/{id}") //TODO 임시, 수정해야함
+    @PutMapping("/{id}")
     public ResponseEntity<String> updateMember(
             @PathVariable Long id,
             @Valid @RequestBody MemberUpdateRequest request,
             @AuthenticationPrincipal PrincipalDetails principalDetails) {
+
+        if(!Objects.equals(principalDetails.getContext().getId(), id)) {
+            return ResponseEntity.badRequest().body("접근 권한이 없습니다.");
+        }
 
         memberService.updateMember(id, request);
 

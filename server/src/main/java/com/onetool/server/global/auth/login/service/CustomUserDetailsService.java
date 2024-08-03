@@ -5,6 +5,7 @@ import com.onetool.server.member.domain.Member;
 import com.onetool.server.member.repository.MemberRepository;
 import com.onetool.server.global.auth.login.PrincipalDetails;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -12,6 +13,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 @Service
+@Slf4j
 @Transactional(readOnly = true)
 @RequiredArgsConstructor
 public class CustomUserDetailsService implements UserDetailsService {
@@ -29,6 +31,8 @@ public class CustomUserDetailsService implements UserDetailsService {
                 .password(member.getPassword())
                 .name(member.getName())
                 .build();
+
+        log.info("CustomUserDetailsService - loadUserByUsername() : PrincipalDetails 생성됨");
 
         return new PrincipalDetails(context);
     }

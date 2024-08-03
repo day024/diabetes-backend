@@ -134,8 +134,12 @@ public class MemberService {
         Member member = memberRepository.findById(id)
                 .orElseThrow(() -> new IllegalArgumentException("회원이 존재하지 않습니다."));
 
-        Member updatedMember = member.updateWith(request);
-        memberRepository.save(updatedMember);
+        member.updateWith(request);
+        if(request.getNewPassword() != null){
+            member.updatePassword(encoder.encode(request.getNewPassword()));
+        }
+
+        memberRepository.save(member);
     }
 
     public int deleteMember(String password, Long id) {
