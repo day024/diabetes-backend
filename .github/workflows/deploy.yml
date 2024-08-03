@@ -37,7 +37,7 @@ jobs:
         run: |
           docker login -u ${{secrets.DOCKER_USERNAME}} -p ${{secrets.DOCKER_PASSWORD}}
           docker build -t ${{secrets.DOCKER_REPO}}/diabet-server:latest .
-          docker push ${{secrets.DOCKER_REPO}}/diabet-server:latest
+          docker push ${{secrets.DOCKER_REPO}}/diabet-server:${{github.sha}}
 
       - name: EC2에서 이미지 pull 후, 컨테이너 실행
         uses: appleboy/ssh-action@master
@@ -47,4 +47,4 @@ jobs:
           key: ${{ secrets.PRIVATE_KEY }}
           script: |
             docker rm -f $(docker ps -qa)
-            docker run -d -p 8080:8080 ${{secrets.DOCKER_REPO}}/diabet-server:latest
+            docker run -d -p 8080:8080 ${{secrets.DOCKER_REPO}}/diabet-server:${{github.sha}}
