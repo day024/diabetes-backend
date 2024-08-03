@@ -17,6 +17,9 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v3
+        with:
+          submodules: true
+          token: ${{secrets.PAT_TOKEN}}
 
       - name: JDK 17 설치
         uses: actions/setup-java@v3
