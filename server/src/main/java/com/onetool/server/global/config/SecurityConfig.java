@@ -3,6 +3,7 @@ package com.onetool.server.global.config;
 
 import com.onetool.server.global.auth.CustomAccessDeniedHandler;
 import com.onetool.server.global.auth.CustomAuthenticationEntryPoint;
+import com.onetool.server.global.auth.WhiteListVO;
 import com.onetool.server.global.auth.filter.JwtAuthFilter;
 import com.onetool.server.global.auth.jwt.JwtUtil;
 import com.onetool.server.global.auth.login.handler.OAuth2LoginFailureHandler;
@@ -36,9 +37,7 @@ public class SecurityConfig {
     private final OAuth2LoginFailureHandler oAuth2LoginFailureHandler;
     private final CustomOAuth2UserService customOAuth2UserService;
 
-    private static final String[] AUTH_WHITELIST = {
-            "/users/**", "/login/**", "/food/**", "/oauth2/**", "/diabetes/**"
-    };
+    private final WhiteListVO whiteListVO = new WhiteListVO();
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
@@ -56,7 +55,7 @@ public class SecurityConfig {
                         .authenticationEntryPoint(authenticationEntryPoint)
                         .accessDeniedHandler(accessDeniedHandler))
                 .authorizeHttpRequests(authorize -> authorize
-                        .requestMatchers(AUTH_WHITELIST).permitAll()
+                        .requestMatchers(whiteListVO.getAUTH_WHITELIST()).permitAll()
                         .anyRequest().authenticated())
                 .oauth2Login(auth -> {
                     auth.successHandler(oAuth2LoginSuccessHandler)
