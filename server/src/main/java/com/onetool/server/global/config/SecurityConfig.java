@@ -75,7 +75,7 @@ public class SecurityConfig {
         configuration.addAllowedOrigin("http://localhost:3000");
         configuration.addAllowedOrigin("https://accounts.google.com");
         configuration.addAllowedMethod("*");
-        configuration.setAllowedHeaders(Arrays.asList(new String[]{"GET","POST"}));
+        configuration.addAllowedHeader("*");
         configuration.setAllowCredentials(true);
         configuration.addExposedHeader("Authorization");
 
