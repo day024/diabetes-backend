@@ -8,3 +8,4 @@ public class WhiteListVO {
             "/users/**", "/login/**", "/food/**", "/oauth2/**", "/diabetes/**"
     };
 }
+

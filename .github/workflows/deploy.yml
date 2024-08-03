@@ -18,7 +18,7 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v3
         with:
-          submodules: true
+          submodules: recursive
           token: ${{secrets.PAT_TOKEN}}
 
       - name: JDK 17 설치
