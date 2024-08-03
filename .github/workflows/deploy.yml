@@ -22,7 +22,8 @@ jobs:
           token: ${{secrets.PAT_TOKEN}}
 
       - name: application-dev 복사
-        run:
+        run: |
+          git submodule update --remote
           cp ./backend_submodule/application-dev.properties ./server/src/main/resources/application-dev.properties
 
       - name: JDK 17 설치
