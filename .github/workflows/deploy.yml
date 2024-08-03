@@ -27,6 +27,7 @@ jobs:
       - name: Spring Project 빌드하기
         run: |
           cd ./server/
+          chmod +x ./gradlew
           ./gradlew clean build -x test
 
       - name: Docker 이미지 만들고 Dockerhub에 푸시
