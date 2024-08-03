@@ -10,6 +10,7 @@ import com.onetool.server.global.auth.login.handler.OAuth2LoginFailureHandler;
 import com.onetool.server.global.auth.login.handler.OAuth2LoginSuccessHandler;
 import com.onetool.server.global.auth.login.service.CustomOAuth2UserService;
 import com.onetool.server.global.auth.login.service.CustomUserDetailsService;
+import io.jsonwebtoken.lang.Arrays;
 import lombok.AllArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -74,7 +75,7 @@ public class SecurityConfig {
         configuration.addAllowedOrigin("http://localhost:3000");
         configuration.addAllowedOrigin("https://accounts.google.com");
         configuration.addAllowedMethod("*");
-        configuration.addAllowedHeader("*");
+        configuration.setAllowedHeaders(Arrays.asList(new String[]{"GET","POST"}));
         configuration.setAllowCredentials(true);
         configuration.addExposedHeader("Authorization");
 
@@ -83,8 +84,8 @@ public class SecurityConfig {
         return source;
     }
 
-//    @Bean
-//    public WebSecurityCustomizer webSecurityCustomizer() {
-//        return (web) -> web.ignoring().requestMatchers(whiteListVO.getAUTH_WHITELIST());
-//    }
+    @Bean
+    public WebSecurityCustomizer webSecurityCustomizer() {
+        return (web) -> web.ignoring().requestMatchers(whiteListVO.getAUTH_WHITELIST());
+    }
 }
