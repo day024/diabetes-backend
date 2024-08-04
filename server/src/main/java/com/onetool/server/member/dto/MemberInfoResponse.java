@@ -7,7 +7,7 @@ import lombok.Builder;
 import java.time.LocalDate;
 
 @Builder
-public record MemberResponse(
+public record MemberInfoResponse(
         String email,
         String password,
         String name,
@@ -19,7 +19,7 @@ public record MemberResponse(
         LocalDate user_registered_at
 ) {
     @Builder
-    public MemberResponse(String email, String password, String name, @Past LocalDate birthDate, String development_field, String phoneNum, boolean isNative, boolean service_accept, LocalDate user_registered_at) {
+    public MemberInfoResponse(String email, String password, String name, @Past LocalDate birthDate, String development_field, String phoneNum, boolean isNative, boolean service_accept, LocalDate user_registered_at) {
         this.email = email;
         this.password = password;
         this.name = name;
@@ -31,8 +31,8 @@ public record MemberResponse(
         this.user_registered_at = user_registered_at;
     }
 
-    public static MemberResponse fromEntity(Member member) {
-        return new MemberResponse(
+    public static MemberInfoResponse fromEntity(Member member) {
+        return new MemberInfoResponse(
                 member.getEmail(),
                 member.getPassword(),
                 member.getName(),

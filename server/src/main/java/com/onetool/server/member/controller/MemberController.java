@@ -1,13 +1,9 @@
 package com.onetool.server.member.controller;
 
-import com.onetool.server.diabetes.dto.DiabetesResponse;
 import com.onetool.server.global.auth.login.PrincipalDetails;
-import com.onetool.server.member.domain.Member;
 import com.onetool.server.member.dto.*;
 import com.onetool.server.member.service.MemberService;
-import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
-import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -68,7 +64,7 @@ public class MemberController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<MemberResponse> getMember(
+    public ResponseEntity<MemberInfoResponse> getMember(
             @PathVariable Long id,
             @AuthenticationPrincipal PrincipalDetails principalDetails) {
 
@@ -76,7 +72,7 @@ public class MemberController {
             return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
         }
         try {
-            MemberResponse memberResponse = memberService.getMember(id);
+            MemberInfoResponse memberResponse = memberService.getMember(id);
             return ResponseEntity.ok(memberResponse);
         } catch (RuntimeException e) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).build();

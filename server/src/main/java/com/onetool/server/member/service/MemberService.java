@@ -175,10 +175,10 @@ public class MemberService {
         return member.getEmail();
     }
 
-    public MemberResponse getMember(Long id) {
+    public MemberInfoResponse getMember(Long id) {
         Member member = memberRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("회원이 존재하지 않습니다."));
 
-        return MemberResponse.fromEntity(member);
+        return MemberInfoResponse.fromEntity(member);
     }
 }
