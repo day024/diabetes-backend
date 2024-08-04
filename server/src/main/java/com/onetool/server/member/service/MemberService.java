@@ -18,7 +18,6 @@ import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import javax.swing.text.html.Option;
 import java.security.NoSuchAlgorithmException;
 import java.security.SecureRandom;
 import java.time.Duration;
@@ -174,5 +173,12 @@ public class MemberService {
         Member member = memberRepository.findByNameAndBirthDate(name, birthDate)
                 .orElseThrow(MemberNotFoundException::new);
         return member.getEmail();
+    }
+
+    public MemberResponse getMember(Long id) {
+        Member member = memberRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("회원이 존재하지 않습니다."));
+
+        return MemberResponse.fromEntity(member);
     }
 }

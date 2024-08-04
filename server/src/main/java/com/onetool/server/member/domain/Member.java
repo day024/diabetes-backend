@@ -78,6 +78,9 @@ public class Member extends BaseEntity {
     @OneToMany(mappedBy = "member")
     private List<Orders> orders = new ArrayList<>();
 
+    @Column(name = "user_registered_at")
+    private LocalDate user_registered_at;
+
     @Builder
     public Member(Long id, String password, String email, String name, LocalDate birthDate, String phoneNum, UserRole role, String field, boolean isNative, boolean serviceAccept, String platformType, SocialType socialType, String socialId, List<QnaBoard> qnaBoards, List<QnaReply> qnaReplies, Cart cart) {
         this.id = id;
@@ -105,5 +108,10 @@ public class Member extends BaseEntity {
 
     public void updatePassword(String encoded) {
         this.password = encoded;
+    }
+
+    @PrePersist
+    protected void onCreate() {
+        this.user_registered_at = LocalDate.now();
     }
 }

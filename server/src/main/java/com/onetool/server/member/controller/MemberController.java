@@ -1,5 +1,6 @@
 package com.onetool.server.member.controller;
 
+import com.onetool.server.diabetes.dto.DiabetesResponse;
 import com.onetool.server.global.auth.login.PrincipalDetails;
 import com.onetool.server.member.domain.Member;
 import com.onetool.server.member.dto.*;
@@ -63,6 +64,22 @@ public class MemberController {
             return ResponseEntity.ok("이메일을 발송했습니다.");
         } else {
             return ResponseEntity.badRequest().body("이메일 발송 과정에서 오류가 발생했습니다.");
+        }
+    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<MemberResponse> getMember(
+            @PathVariable Long id,
+            @AuthenticationPrincipal PrincipalDetails principalDetails) {
+
+        if (!Objects.equals(principalDetails.getContext().getId(), id)) {
+            return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
+        }
+        try {
+            MemberResponse memberResponse = memberService.getMember(id);
+            return ResponseEntity.ok(memberResponse);
+        } catch (RuntimeException e) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
         }
     }
 
