@@ -125,25 +125,66 @@ public class MemberServiceTest {
     @Test
     @DisplayName("멤버가 삭제되는지 확인")
     void memberDelete() {
+        // given (회원 가입)
+        final Map<String, Object> signupParams = Map.of(
+                "email", "admin@example.com",
+                "password", "1234",
+                "name", "홍길동",
+                "birthDate", "2001-03-26",
+                "development_field", "백엔드",
+                "phoneNum", "010-0000-0000",
+                "isNative", true
+        );
 
-        // given
-        if (memberCreateResponse == null) {
-            throw new IllegalStateException("회원이 생성되지 않았습니다.");
-        }
-        final Long userId = memberCreateResponse.jsonPath().getLong("id");
+        // 회원 가입 요청
+        RestAssured.given().log().all()
+                .contentType(ContentType.JSON)
+                .body(signupParams)
+                .when().post("/users/signup")
+                .then().log().all()
+                .statusCode(201);
 
-        // when
+        // given (로그인)
+        final Map<String, String> loginParams = Map.of(
+                "email", "admin@example.com",
+                "password", "1234"
+        );
+
+        // 로그인 요청
+        ExtractableResponse<Response> loginResponse = RestAssured.given().log().all()
+                .contentType(ContentType.JSON)
+                .body(loginParams)
+                .when().post("/users/login")
+                .then().log().all()
+                .statusCode(200)
+                .extract();
+
+        // 로그인 응답에서 토큰 추출
+        String token = loginResponse.asString();
+        assertThat(token).isNotEmpty();
+
+        // Delete 요청 시 사용될 요청 본문
+        final Map<String, Object> deleteParams = Map.of(
+                "id", 1,
+                "password", "1234"
+        );
+
+        // when (회원 삭제 요청)
         final ExtractableResponse<Response> deleteResponse = RestAssured.given().log().all()
-                .when().delete("/users/" + userId)
+                .header("Authorization", "Bearer " + token)
+                .contentType(ContentType.JSON)  // 본문을 JSON으로 설정
+                .body(deleteParams)  // 요청 본문에 삭제 정보 포함
+                .when().delete("/users/1")
                 .then().log().all()
                 .extract();
 
         // then
         assertAll(
                 () -> assertThat(deleteResponse.statusCode()).isEqualTo(HttpStatus.OK.value()),
-                () -> assertThat(deleteResponse.body().asString()).isEqualTo("회원 탈퇴가 완료되었습니다.")
+                () -> assertThat(deleteResponse.body().asString()).isEqualTo("정상적으로 탈퇴되었습니다.")
         );
     }
+
 
     @Test
     @DisplayName("이메일 찾기 테스트")
