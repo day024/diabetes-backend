@@ -54,10 +54,6 @@ dependencies {
 
 	implementation 'org.springframework.boot:spring-boot-starter-data-redis'
 
-	// Apache HTTP Client
-	implementation 'org.apache.httpcomponents:httpclient:4.5.13'
-	// Apache HTTP Core
-	implementation 'org.apache.httpcomponents:httpcore:4.4.14'
 }
 
 tasks.named('test') {
