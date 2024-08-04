@@ -31,6 +31,7 @@ public record MemberInfoResponse(
         this.user_registered_at = user_registered_at;
     }
 
+
     public static MemberInfoResponse fromEntity(Member member) {
         return new MemberInfoResponse(
                 member.getEmail(),

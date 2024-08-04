@@ -95,16 +95,18 @@ public class MemberController {
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<String> deleteMember(@PathVariable Long id,
-                                               @RequestParam("password") String password,
+    public ResponseEntity<String> deleteMember(@RequestBody MemberDeleteRequest request,
                                                @AuthenticationPrincipal PrincipalDetails principalDetails) {
 
-        int result = memberService.deleteMember(password, id);
+        if (!Objects.equals(principalDetails.getContext().getId(), request.id())) {
+            return ResponseEntity.badRequest().body("접근 권한이 없습니다.");
+        }
 
-        if (result > 0) {
-            return ResponseEntity.ok("회원 탈퇴가 완료되었습니다.");
-        } else {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("비밀번호가 일치하지 않습니다.");
+        try {
+            memberService.deleteMember(request.id(), request.password());
+            return ResponseEntity.ok("정상적으로 탈퇴되었습니다.");
+        } catch (IllegalArgumentException e) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
         }
     }
 
