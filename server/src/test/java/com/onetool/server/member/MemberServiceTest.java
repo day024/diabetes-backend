@@ -123,7 +123,7 @@ public class MemberServiceTest {
     assertThat(memberResponse.jsonPath().getString("development_field")).isEqualTo("백엔드");
     assertThat(memberResponse.jsonPath().getString("phoneNum")).isEqualTo("010-0000-0000");
     assertThat(memberResponse.jsonPath().getBoolean("isNative")).isTrue();
-    assertThat(memberResponse.jsonPath().getString("createdDate")).isEqualTo(LocalDate.now().toString()); // 날짜 문자열로 비교
+    assertThat(memberResponse.jsonPath().getString("user_registered_at")).isEqualTo(LocalDate.now().toString()); // 날짜 문자열로 비교
 }
 
 
