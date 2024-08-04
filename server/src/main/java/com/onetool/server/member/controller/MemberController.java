@@ -1,12 +1,9 @@
 package com.onetool.server.member.controller;
 
 import com.onetool.server.global.auth.login.PrincipalDetails;
-import com.onetool.server.member.domain.Member;
 import com.onetool.server.member.dto.*;
 import com.onetool.server.member.service.MemberService;
-import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
-import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -63,6 +60,22 @@ public class MemberController {
             return ResponseEntity.ok("이메일을 발송했습니다.");
         } else {
             return ResponseEntity.badRequest().body("이메일 발송 과정에서 오류가 발생했습니다.");
+        }
+    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<MemberInfoResponse> getMember(
+            @PathVariable Long id,
+            @AuthenticationPrincipal PrincipalDetails principalDetails) {
+
+        if (!Objects.equals(principalDetails.getContext().getId(), id)) {
+            return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
+        }
+        try {
+            MemberInfoResponse memberResponse = memberService.getMember(id);
+            return ResponseEntity.ok(memberResponse);
+        } catch (RuntimeException e) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
         }
     }
 
