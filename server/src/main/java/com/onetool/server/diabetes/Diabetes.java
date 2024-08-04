@@ -2,6 +2,7 @@ package com.onetool.server.diabetes;
 
 import com.onetool.server.cart.CartBlueprint;
 import com.onetool.server.global.entity.BaseEntity;
+import com.onetool.server.order.OrderBlueprint;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
 import lombok.Builder;
@@ -47,6 +48,9 @@ public class Diabetes extends BaseEntity {
 
     @OneToMany(mappedBy = "diabetes")
     private List<CartBlueprint> cartBlueprints = new ArrayList<>();
+
+    @OneToMany(mappedBy = "diabetes")
+    private List<OrderBlueprint> orderDiabetes = new ArrayList<>();
 
     //TODO 일단 장바구니&주문 맵핑 나중에
 //    @ManyToOne(fetch = FetchType.LAZY)
