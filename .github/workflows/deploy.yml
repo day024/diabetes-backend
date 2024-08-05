@@ -46,5 +46,6 @@ jobs:
           username: ${{ secrets.EC2_SSH_USER }}
           key: ${{ secrets.PRIVATE_KEY }}
           script: |
-            docker rm -f $(docker ps -q --filter ancestor=diabet-server)
+            docker rm -f $(docker ps -qa)
             docker run -d -p 8080:8080 ${{secrets.DOCKER_REPO}}/diabet-server:${{github.sha}}
+            docker run -d -p 8080:8080 ${{secrets.DOCKER_REPO}}/diabet-app:${{github.sha}}
