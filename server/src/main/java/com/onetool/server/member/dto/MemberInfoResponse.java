@@ -1,10 +1,12 @@
 package com.onetool.server.member.dto;
 
 import com.onetool.server.member.domain.Member;
+import com.onetool.server.order.dto.response.OrderResponse;
 import jakarta.validation.constraints.Past;
 import lombok.Builder;
 
 import java.time.LocalDate;
+import java.util.List;
 
 @Builder
 public record MemberInfoResponse(
@@ -17,10 +19,11 @@ public record MemberInfoResponse(
         String phoneNum,
         boolean isNative,
         boolean service_accept,
-        LocalDate user_registered_at
+        LocalDate user_registered_at,
+        List<OrderResponse.OrderCompleteResponseDto> orderCompleteResponseDtos
 ) {
     @Builder
-    public MemberInfoResponse(Long id, String email, String password, String name, @Past LocalDate birthDate, String development_field, String phoneNum, boolean isNative, boolean service_accept, LocalDate user_registered_at) {
+    public MemberInfoResponse(Long id, String email, String password, String name, @Past LocalDate birthDate, String development_field, String phoneNum, boolean isNative, boolean service_accept, LocalDate user_registered_at, List<OrderResponse.OrderCompleteResponseDto> orderCompleteResponseDtos) {
         this.id = id;
         this.email = email;
         this.password = password;
@@ -31,6 +34,7 @@ public record MemberInfoResponse(
         this.isNative = isNative;
         this.service_accept = service_accept;
         this.user_registered_at = user_registered_at;
+        this.orderCompleteResponseDtos = orderCompleteResponseDtos;
     }
 
 
@@ -45,7 +49,8 @@ public record MemberInfoResponse(
                 member.getPhoneNum(),
                 member.isNative(),
                 member.isServiceAccept(),
-                member.getUser_registered_at()
+                member.getUser_registered_at(),
+                member.getOrders().stream().map(OrderResponse.OrderCompleteResponseDto::response).toList()
         );
     }
 }
