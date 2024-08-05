@@ -5,6 +5,7 @@ import com.onetool.server.global.entity.BaseEntity;
 import com.onetool.server.member.dto.MemberUpdateRequest;
 import com.onetool.server.member.enums.SocialType;
 import com.onetool.server.member.enums.UserRole;
+import com.onetool.server.order.Orders;
 import com.onetool.server.qna.QnaBoard;
 import com.onetool.server.qna.QnaReply;
 import jakarta.persistence.*;
@@ -74,6 +75,12 @@ public class Member extends BaseEntity {
     @OneToOne(mappedBy = "member", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private Cart cart;
 
+    @OneToMany(mappedBy = "member")
+    private List<Orders> orders = new ArrayList<>();
+
+    @Column(name = "user_registered_at")
+    private LocalDate user_registered_at;
+
     @Builder
     public Member(Long id, String password, String email, String name, LocalDate birthDate, String phoneNum, UserRole role, String field, boolean isNative, boolean serviceAccept, String platformType, SocialType socialType, String socialId, List<QnaBoard> qnaBoards, List<QnaReply> qnaReplies, Cart cart) {
         this.id = id;
@@ -101,5 +108,10 @@ public class Member extends BaseEntity {
 
     public void updatePassword(String encoded) {
         this.password = encoded;
+    }
+
+    @PrePersist
+    protected void onCreate() {
+        this.user_registered_at = LocalDate.now();
     }
 }
