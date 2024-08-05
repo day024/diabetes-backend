@@ -72,7 +72,7 @@ public class SecurityConfig {
     @Bean
     public CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration configuration = new CorsConfiguration();
-        configuration.addAllowedOrigin("http://localhost:3000");
+        configuration.addAllowedOrigin("http://www.onetool.co.kr");
         configuration.addAllowedOrigin("https://accounts.google.com");
         configuration.addAllowedMethod("*");
         configuration.addAllowedHeader("*");
