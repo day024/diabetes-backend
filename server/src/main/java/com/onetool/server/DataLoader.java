@@ -33,7 +33,7 @@ public class DataLoader implements CommandLineRunner {
         createCategoryIfNotExists(7L, "육류");
         createCategoryIfNotExists(8L, "해산물");
         createCategoryIfNotExists(9L, "닭고기");
-        createCategoryIfNotExists(10L, "채소 & 두부");
+        createCategoryIfNotExists(10L, "채소");
         createCategoryIfNotExists(11L, "category5");
         loadDiabetes();
     }
@@ -162,7 +162,7 @@ public class DataLoader implements CommandLineRunner {
 
         saveDiabetesIfNotExists(
                 "도토리묵비빔 세트",
-                "채소 & 두부",
+                "채소",
                 9500L,
                 "여름이면 생각나는 도토리묵은 비빔밥으로 먹어도 맛있어요. 고명으로 넣은 소고기 볶음은 양파, 파프리카와 함께 간장 소스를 넣고 감칠맛 나게 달달 볶아냈어요. 송송 썬 청양고추로 매콤함을 더하고 참기름으로 고소하게 마무리한 양념 김치도 함께 넣어 드세요.\n\n보리고추장 소스에 양파, 대파, 마늘을 넣고 볶아낸 약고추장 소스는 소스의 깊이감이 남달라요. 밥과 고명을 한데 모은 뒤 고추장 적당량을 넣고 슥슥 비벼 맛있게 드세요.\n\nPS. 신선한 상품을 만들기 위해 주문 후 제조합니다. 소비기한은 제조일로부터 4일이니, 안전하게 기한 안에 꼭 드세요.",
                 "https://image.greating.co.kr/IL/item/202405/22/B_C1820374C0F74F6284CE1FC21427DB50.jpg",
@@ -218,7 +218,7 @@ public class DataLoader implements CommandLineRunner {
         );
         saveDiabetesIfNotExists(
                 "버섯팔보채 세트",
-                "채소 & 두부",
+                "채소",
                 10500L,
                 "6가지 버섯을 넣어 한층 담백하고 깔끔한 버섯 팔보채를 준비했어요. 표고와 양송이, 느타리버섯 등 다양한 버섯과 호주산 소고기를 그리팅 특제 굴소스에 볶았어요. 따뜻한 밥 위에 얹어 덮밥으로 즐겨도 좋아요.\n\n오븐에 구워 담백한 돼지고기에 채소를 매콤 새콤하게 볶아낸 라조육도 정갈하게 담았어요. 여기에 누룽지 튀김을 곁들인 샐러드까지 더해, 푸짐한 중국식 한 상을 즐겨 보세요.\n\nPS. 신선한 상품을 만들기 위해 주문 후 제조합니다. 냉장 제품의 소비기한은 제조일로부터 4일인, 안전하게 기한 안에 꼭 드세요.",
                 "https://image.greating.co.kr/IL/item/202403/13/B_32A797B3314D423B92229708D9FEDB86.jpg",
@@ -287,7 +287,7 @@ public class DataLoader implements CommandLineRunner {
         );
         saveDiabetesIfNotExists(
                 "진저포크볶음 세트",
-                "채소 & 두부",
+                "채소",
                 10500L,
                 "은은하게 퍼지는 생강향으로 입맛을 확 돋워 줄 진저포크볶음 세트를 소개해요. 국산 돼지고기는 생강 소스에 한번 구운 뒤, 깻잎과 국산 콩간장, 올리고당을 넣고 달큰하게 볶아 내었어요.\n\n고소한 캐슈넛과 조화가 좋은 깐풍두부강정도 준비했어요. 오븐에 구워 쫀득한 두부 강정을 새콤달콤한 깐풍 소스에 버무렸어요. 여기에 소금과 후추를 넣고 볶아 식재 본연의 맛을 살린 버섯 부추 볶음으로 마지막까지 깔끔하게 즐길 수 있답니다. 돼지고기와 두부로 동, 식물성 단백질을 골고루 섭취 가능한 맛있는 식단으로 힘찬 하루를 완성해 보세요.\n\nPS. 신선한 상품을 만들기 위해 주문 후 제조합니다. 냉장 제품의 소비기한은 제조일로부터 4일이니, 안전하게 기한 안에 꼭 드세요.",
                 "https://image.greating.co.kr/IL/item/202310/18/B_5498FE446F1E4EE8A44E83C72D41D510.jpg",
