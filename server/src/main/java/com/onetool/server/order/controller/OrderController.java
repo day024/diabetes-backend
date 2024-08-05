@@ -7,6 +7,7 @@ import com.onetool.server.order.service.OrderServiceImpl;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -27,7 +28,7 @@ public class OrderController {
     }
 
     //결제 완료 시
-    @GetMapping("/orders/complete")
+    @PostMapping("/orders/complete")
     public ApiResponse<?> createOrder(@AuthenticationPrincipal PrincipalDetails principal,
                                       @RequestBody OrderRequest request) {
         return ApiResponse.onSuccess(orderService.createOrders(principal.getContext(), request));
