@@ -8,6 +8,7 @@ import java.time.LocalDate;
 
 @Builder
 public record MemberInfoResponse(
+        Long id,
         String email,
         String password,
         String name,
@@ -19,7 +20,8 @@ public record MemberInfoResponse(
         LocalDate user_registered_at
 ) {
     @Builder
-    public MemberInfoResponse(String email, String password, String name, @Past LocalDate birthDate, String development_field, String phoneNum, boolean isNative, boolean service_accept, LocalDate user_registered_at) {
+    public MemberInfoResponse(Long id, String email, String password, String name, @Past LocalDate birthDate, String development_field, String phoneNum, boolean isNative, boolean service_accept, LocalDate user_registered_at) {
+        this.id = id;
         this.email = email;
         this.password = password;
         this.name = name;
@@ -34,6 +36,7 @@ public record MemberInfoResponse(
 
     public static MemberInfoResponse fromEntity(Member member) {
         return new MemberInfoResponse(
+                member.getId(),
                 member.getEmail(),
                 member.getPassword(),
                 member.getName(),

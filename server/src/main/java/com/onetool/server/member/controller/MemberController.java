@@ -92,4 +92,18 @@ public class MemberController {
         String email = memberService.findEmail(request);
         return ResponseEntity.ok(email);
     }
+
+    @GetMapping
+    public ResponseEntity<MemberInfoResponse> getMemberInfo(
+            @AuthenticationPrincipal PrincipalDetails principalDetails) {
+
+        Long id = principalDetails.getContext().getId();
+
+        try {
+            MemberInfoResponse memberResponse = memberService.getMemberInfo(id);
+            return ResponseEntity.ok(memberResponse);
+        } catch (RuntimeException e) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
+        }
+    }
 }
