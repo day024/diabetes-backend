@@ -66,33 +66,25 @@ public class MemberController {
         }
     }
 
-    @PutMapping("/{id}")
+    @PutMapping
     public ResponseEntity<String> updateMember(
-            @PathVariable Long id,
-            @Valid @RequestBody MemberUpdateRequest request,
+            @RequestBody MemberUpdateRequest request,
             @AuthenticationPrincipal PrincipalDetails principalDetails) {
 
-        if(!Objects.equals(principalDetails.getContext().getId(), id)) {
-            return ResponseEntity.badRequest().body("접근 권한이 없습니다.");
-        }
-
+        Long id = principalDetails.getContext().getId();
         memberService.updateMember(id, request);
 
         return ResponseEntity.ok("회원 정보가 수정되었습니다.");
     }
 
-    @DeleteMapping("/{id}")
-    public ResponseEntity<String> deleteMember(@PathVariable Long id,
-                                               @RequestParam("password") String password,
-                                               @AuthenticationPrincipal PrincipalDetails principalDetails) {
+    @DeleteMapping
+    public ResponseEntity<String> deleteMember(
+            @AuthenticationPrincipal PrincipalDetails principalDetails) {
 
-        int result = memberService.deleteMember(password, id);
+        Long id = principalDetails.getContext().getId();
+        memberService.deleteMember(id);
 
-        if (result > 0) {
-            return ResponseEntity.ok("회원 탈퇴가 완료되었습니다.");
-        } else {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("비밀번호가 일치하지 않습니다.");
-        }
+        return ResponseEntity.ok("회원 탈퇴가 완료되었습니다.");
     }
 
     @PostMapping("/email")
