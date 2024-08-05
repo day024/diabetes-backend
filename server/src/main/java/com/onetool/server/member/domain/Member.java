@@ -76,6 +76,7 @@ public class Member extends BaseEntity {
     private Cart cart;
 
     @OneToMany(mappedBy = "member")
+    @OrderBy("createdAt DESC")
     private List<Orders> orders = new ArrayList<>();
 
     @Column(name = "user_registered_at")
