@@ -58,6 +58,7 @@ public class MemberServiceTest {
         );
     }
 
+
     @Test
     @DisplayName("로그인 후 회원 정보 조회 성공 테스트")
     void loginAndGetMemberSuccess() {
@@ -92,7 +93,7 @@ public class MemberServiceTest {
                 .body(loginParams)
                 .when().post("/users/login")
                 .then().log().all()
-                .statusCode(200)  // 로그인 성공 상태 코드
+                .statusCode(200)
                 .extract();
 
         // 로그인 응답에서 토큰 추출
@@ -101,9 +102,9 @@ public class MemberServiceTest {
 
         // when (회원 정보 조회)
         ExtractableResponse<Response> memberResponse = RestAssured.given().log().all()
-                .header("Authorization", "Bearer " + token) // 토큰 추가
+                .header("Authorization", "Bearer " + token)
                 .contentType(ContentType.JSON)
-                .when().get("/users/1") 
+                .when().get("/users")
                 .then().log().all()
                 .statusCode(200)
                 .extract();
@@ -111,15 +112,15 @@ public class MemberServiceTest {
         // 응답 본문 출력 (디버깅용)
         System.out.println("Member response body: " + memberResponse.body().asString());
 
-    // then (조회 결과 검증)
-    assertThat(memberResponse.jsonPath().getString("email")).isEqualTo("admin@example.com");
-    assertThat(memberResponse.jsonPath().getString("name")).isEqualTo("홍길동");
-    assertThat(memberResponse.jsonPath().getString("birthDate")).isEqualTo("2001-03-26");
-    assertThat(memberResponse.jsonPath().getString("development_field")).isEqualTo("백엔드");
-    assertThat(memberResponse.jsonPath().getString("phoneNum")).isEqualTo("010-0000-0000");
-    assertThat(memberResponse.jsonPath().getBoolean("isNative")).isTrue();
-    assertThat(memberResponse.jsonPath().getString("user_registered_at")).isEqualTo(LocalDate.now().toString()); // 날짜 문자열로 비교
-}
+        // then (조회 결과 검증)
+        assertThat(memberResponse.jsonPath().getString("email")).isEqualTo("admin@example.com");
+        assertThat(memberResponse.jsonPath().getString("name")).isEqualTo("홍길동");
+        assertThat(memberResponse.jsonPath().getString("birthDate")).isEqualTo("2001-03-26");
+        assertThat(memberResponse.jsonPath().getString("development_field")).isEqualTo("백엔드");
+        assertThat(memberResponse.jsonPath().getString("phoneNum")).isEqualTo("010-0000-0000");
+        assertThat(memberResponse.jsonPath().getBoolean("isNative")).isTrue();
+        assertThat(memberResponse.jsonPath().getString("user_registered_at")).isEqualTo(LocalDate.now().toString());
+    }
 
 
     @Test

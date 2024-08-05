@@ -169,4 +169,11 @@ public class MemberService {
                 .orElseThrow(MemberNotFoundException::new);
         return member.getEmail();
     }
+
+    public MemberInfoResponse getMemberInfo(Long userId) {
+        Member member = memberRepository.findById(userId)
+                .orElseThrow(() -> new RuntimeException("회원 정보가 존재하지 않습니다."));
+
+        return MemberInfoResponse.fromEntity(member);
+    }
 }
