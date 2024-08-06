@@ -73,6 +73,7 @@ public class SecurityConfig {
     public CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration configuration = new CorsConfiguration();
         configuration.addAllowedOrigin("http://www.onetool.co.kr");
+        configuration.addAllowedOrigin("http://onetool.co.kr");
         configuration.addAllowedOrigin("http://localhost:3000");
         configuration.addAllowedOrigin("https://accounts.google.com");
         configuration.addAllowedMethod("*");
